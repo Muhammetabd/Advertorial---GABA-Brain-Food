@@ -1,0 +1,210 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SporaCare Advertorial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+    }
+    .section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    .cta-button {
+      transition: background-color 0.3s ease;
+    }
+    .cta-button:hover {
+      background-color: #1a7c3a;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="bg-white">
+    <!-- Header Section -->
+    <header class="bg-green-600 text-white text-center py-8">
+      <div class="section">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4">"At 52, I Thought My Hair Loss Was Permanent... Until I Discovered This Ancient Japanese Secret"</h1>
+        <p class="text-lg italic">How a desperate mother found a 1,000-year-old mushroom ritual that reversed years of menopausal hair loss in just 12 weeks</p>
+      </div>
+    </header>
+
+    <!-- Introduction -->
+    <section class="section">
+      <p class="text-lg mb-4">Hi, I'm Sarah Mitchell, and until 3 months ago, I was hiding from my own reflection.</p>
+      <p class="mb-4">Every six weeks, like clockwork, I used to sit in that salon chair and just feel... beautiful. My stylist would always comment on how thick and healthy my hair was. It was my signature—the thing people notice about me first.</p>
+      <p class="mb-4">That was before menopause turned me into a stranger.</p>
+      <p class="mb-4">I started avoiding mirrors. Getting dressed in the dark. Wearing hats to the grocery store. The woman staring back at me... she wasn't me. I didn't know who she was, but she definitely wasn't the confident woman I used to be.</p>
+    </section>
+
+    <!-- The Struggle -->
+    <section class="section bg-gray-50 py-6 rounded-lg">
+      <h2 class="text-2xl font-semibold mb-4">When My Hair Started Disappearing (And So Did I)</h2>
+      <p class="mb-4">At 48, I noticed a few extra hairs in my brush. Nothing alarming. Just... different. Six months later, I was finding clumps of hair on my pillow every morning. The shower drain would be completely clogged after every wash. I'd stand there looking at this mat of my own hair, just horrified.</p>
+      <p class="mb-4">But it wasn't just the shedding that devastated me. My once-thick hair became thin, lifeless, and brittle. When I'd run my fingers through it, whole sections would just come out in my hand.</p>
+      <p class="mb-4">The breaking point came on what should have been one of the happiest days of my life—my daughter's wedding. I was getting ready in the hotel bathroom, and I just... froze. The woman staring back at me looked like a stranger. My hair was so thin I could see straight through to my scalp under the harsh lighting.</p>
+      <p class="mb-4">I spent 45 minutes with hairspray and a teasing comb, desperately trying to create the illusion of fullness. But every time I moved, you could see right through it. I felt like I was disappearing, strand by strand.</p>
+    </section>
+
+    <!-- Failed Attempts -->
+    <section class="section">
+      <h2 class="text-2xl font-semibold mb-4">My $2,500 Failure</h2>
+      <p class="mb-4">Like most women facing this nightmare, I didn't give up without a fight. I tried everything. Expensive shampoos that promised to "volumize" and "strengthen." My bathroom cabinet looked like a salon supply store—$400 worth of bottles that only made things worse.</p>
+      <p class="mb-4">I dove into home remedies. Rosemary oil massages. Onion juice treatments. Rice water rinses. I was spending my evenings mixing up these concoctions like some kind of hair witch.</p>
+      <p class="mb-4">Desperate, I went to doctors and specialists. I did blood tests—everything came back "normal." They basically told me it was just aging.</p>
+      <p class="mb-4">As a last resort, I invested in a $180 "clinical" scalp treatment system with derma rollers, serums, and LED lights. I looked like I was performing surgery on my scalp every night. After three months, zero improvement. Total damage: Nearly $2,500. Total results: Nothing.</p>
+    </section>
+
+    <!-- The Turning Point -->
+    <section class="section bg-gray-50 py-6 rounded-lg">
+      <h2 class="text-2xl font-semibold mb-4">The Coffee Shop Revelation That Changed Everything</h2>
+      <p class="mb-4">Three weeks after my daughter's wedding, I was having coffee with my friend Maria—a holistic nutritionist who'd just returned from a wellness retreat. I was probably complaining about my hair for the hundredth time when Maria stopped me mid-sentence.</p>
+      <p class="mb-4">She'd met a 63-year-old Japanese woman at the retreat. A woman who looked decades younger with incredibly thick, lustrous hair. Maria showed me a photo on her phone. I couldn't believe this woman was 63. Her hair was... stunning.</p>
+      <p class="mb-4">Then she showed me something that changed everything. A before-and-after photo of this same woman. The "before" looked like a completely different person. Thin, lifeless hair. Visible scalp. The transformation was that dramatic.</p>
+      <p class="mb-4">This woman, Keiko, had shared an ancient secret: "In Japan, we've used specific mushrooms for scalp health for centuries. But not just any mushrooms—adaptogenic varieties that work with your body's natural rhythms."</p>
+      <p class="mb-4">Then she explained something no doctor had ever mentioned: Your scalp has completely different needs during the day versus night. During the day, your scalp defends against environmental damage. At night, it switches to repair mode, focusing on healing and growth. Most hair products treat your scalp the same way 24/7, which works against your body's natural cycles.</p>
+      <p class="mb-4">It was like a lightbulb went off. Everything I'd tried was fighting against my scalp's natural rhythm. Keiko had mentioned a brand called SporaCare that had taken these ancient mushroom traditions and combined them with modern science. A two-part system designed to work with your scalp's day/night cycle.</p>
+    </section>
+
+    <!-- The Decision -->
+    <section class="section">
+      <h2 class="text-2xl font-semibold mb-4">My Last-Chance Decision</h2>
+      <p class="mb-4">I went home and researched everything I could find about SporaCare. I'd been burned so many times. But something about this felt different. The science made sense. During the day, your scalp needs protection and hydration while facing environmental stressors. At night, it needs repair and restoration while your body recovers.</p>
+      <p class="mb-4">Every other product I'd tried was one-size-fits-all. This was the first thing that acknowledged my scalp wasn't the same 24/7. Still, I hesitated. I'd already spent a fortune on failed solutions. I called my daughter and told her about it. She said, "Mom, you've tried everything else. What's one more?" But I think she was just tired of seeing me so miserable.</p>
+      <p class="mb-4">The deciding factor was SporaCare's guarantee. Twelve weeks. If I didn't see results, they'd refund my money. I figured I had nothing left to lose except my pride. And I'd already lost most of that in that hotel bathroom mirror. I placed my order on a Tuesday. The package arrived Thursday.</p>
+    </section>
+
+    <!-- First Signs and Transformation -->
+    <section class="section bg-gray-50 py-6 rounded-lg">
+      <h2 class="text-2xl font-semibold mb-4">The First Signs</h2>
+      <p class="mb-4">The first thing I noticed was how different it felt. Not greasy or heavy like every other product I'd tried. The day serum was light and absorbed completely. The night serum felt... nourishing. Like it was actually feeding my scalp.</p>
+      <p class="mb-4">By day three, my scalp felt different. Less tight, less irritated. By the end of the first week, there was definitely less hair in my brush. I counted the strands for three days straight to be sure. Within a few weeks, my husband noticed. He walked into the bathroom and said, "Your hair looks... different. Good different."</p>
+      <p class="mb-4">The constant irritation I'd lived with for months was gone. And the real shock? The shower drain was nearly clear. For the first time in over a year, I didn't dread washing my hair.</p>
+      <h2 class="text-2xl font-semibold mb-4 mt-6">Week 12: "I Cried Happy Tears"</h2>
+      <p class="mb-4">Three months after starting SporaCare, I stood in front of my bathroom mirror—the same mirror I'd avoided for over a year. I just stared at myself and started crying. But for the first time in so long, they were happy tears. The transformation was undeniable. My hair was thicker, fuller, with natural shine and movement I hadn't seen since before menopause.</p>
+      <p class="mb-4">I took a photo and compared it to one from six months earlier. I couldn't believe it was the same person. My confidence returned with my hair. I made an appointment at my old salon—the first time in over a year. When I walked in, my stylist's jaw dropped. She said, "Sarah, what have you been doing? Your hair is incredible."</p>
+      <p class="mb-4">For the first time in years, I felt beautiful again. I bought new clothes. Started wearing makeup again. Accepted a dinner invitation I would have declined before. I felt like myself—the real me—for the first time in years.</p>
+    </section>
+
+    <!-- Why It Works -->
+    <section class="section">
+      <h2 class="text-2xl font-semibold mb-4">Why This Works When Everything Else Failed</h2>
+      <p class="mb-4">After my transformation, I became curious about why SporaCare worked when everything else had failed. The breakthrough isn't just about ingredients—it's about timing. Most people don't realize that your scalp operates on a circadian rhythm, just like the rest of your body. During the day, it's focused on protection and defense. At night, it shifts to repair and regeneration.</p>
+      <p class="mb-4">This is why traditional hair products fail. They treat your scalp the same way 24 hours a day, fighting against your body's natural cycles. It's like trying to sleep and stay alert at the same time. Your scalp can't do both jobs effectively.</p>
+      <p class="mb-4">SporaCare's breakthrough was creating two distinct formulas:</p>
+      <ul class="list-disc pl-6 mb-4">
+        <li><strong>Day Serum:</strong> Provides hydration and protection when your scalp is defending against environmental stressors like UV damage and pollution.</li>
+        <li><strong>Night Serum:</strong> Delivers repair and restoration nutrients when your scalp is in natural recovery mode.</li>
+      </ul>
+      <p class="mb-4">This was the missing piece. Every other product I tried was working against my scalp's natural rhythm. But the timing is only half the story. The real power comes from SporaCare's use of adaptogenic mushrooms—ingredients that help your body adapt to stress and maintain balance.</p>
+      <p class="mb-4">These aren't just trendy ingredients. They've been used for scalp and hair health in Asia for centuries. SporaCare just figured out how to combine them with modern science. The mushrooms work with other proven ingredients to create the optimal environment for hair growth. It's not just about stopping hair loss. It's about creating a healthy scalp ecosystem where hair can actually thrive.</p>
+    </section>
+
+    <!-- The Guarantee -->
+    <section class="section bg-gray-50 py-6 rounded-lg">
+      <h2 class="text-2xl font-semibold mb-4">The Guarantee That Convinced Me</h2>
+      <p class="mb-4">Even with the science making sense, I was hesitant to try another product. I'd been burned so many times. But the guarantee was different. Unlike other companies that offer 30-day money-back guarantees—barely enough time to see real results—SporaCare offers 12 weeks.</p>
+      <p class="mb-4">They told me to take photos every week and follow the routine consistently. If I didn't see visible improvement after 12 weeks, they'd refund my money. No questions asked. That told me they were confident in their product. They weren't trying to rush me into a decision before I could see real results.</p>
+      <p class="mb-4">The guarantee removed my risk entirely. I figured, worst case scenario, I'd get my money back and be no worse off than before. Best case, I'd get my hair back.</p>
+    </section>
+
+    <!-- Six Months Later -->
+    <section class="section">
+      <h2 class="text-2xl font-semibold mb-4">Six Months Later</h2>
+      <p class="mb-4">My transformation is complete. People who haven't seen me in a while don't even recognize me. My hair is thicker and fuller than it's been in years. Maybe even better than before menopause started.</p>
+      <p class="mb-4">But the changes go beyond just hair. I feel confident again. Attractive. Like myself. I didn't realize how much my hair loss was affecting every aspect of my life until I got my hair back.</p>
+      <p class="mb-4">I now recommend SporaCare to every woman I meet who's dealing with hair loss. I tell them what Maria told me: "I know it sounds too good to be true, but just look at the science. Look at the guarantee. What do you have to lose?"</p>
+      <p class="mb-4">For me, it gave me back more than just my hair. It gave me back my confidence, my identity, my joy. It gave me back... me.</p>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section bg-gray-50 py-6 rounded-lg">
+      <h2 class="text-2xl font-semibold mb-4">I'm Not Alone</h2>
+      <p class="mb-4">My experience isn't unique. Thousands of women have discovered the same life-changing results with SporaCare's system.</p>
+      <div class="mb-6">
+        <p class="italic mb-2">"Two months in, I started seeing baby hairs where it had been thinning. If menopause is messing with your hair too, I totally get it. I'm just sharing what helped me—real results."</p>
+        <p class="font-semibold">— Jennifer M., 48, from Phoenix</p>
+      </div>
+      <div class="mb-6">
+        <p class="italic mb-2">"I was doubtful, but since the trial was risk-free, I gave it a shot. Within two weeks, my scalp felt noticeably calmer—no more irritation or constant itching. After a month, I saw way less shedding in the shower. I honestly couldn't believe it. This is the best scalp solution I've ever used."</p>
+        <p class="font-semibold">— Marina T., 54, from Denver</p>
+      </div>
+      <p class="mb-4">The results speak for themselves. In clinical testing with 122 women aged 26-66:</p>
+      <ul class="list-disc pl-6 mb-4">
+        <li>87% reported thicker, fuller hair</li>
+        <li>84% noticed significant reduction in hair fall</li>
+        <li>92% experienced healthier scalp conditions</li>
+      </ul>
+      <p class="mb-4">The numbers don't lie. But more importantly, look at the real women sharing their stories. We're not paid spokesmodels. We're regular women who got our confidence back.</p>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section text-center">
+      <h2 class="text-2xl font-semibold mb-4">Your Turn</h2>
+      <p class="mb-4">If you're reading my story and seeing yourself in my struggle, you have a choice to make. You can continue down the same path—watching your hair get thinner, avoiding mirrors, making excuses to skip social events, spending money on products that don't work. Or you can try the system that gave me my life back.</p>
+      <p class="mb-4">If I could go back and talk to myself on that awful day in the hotel bathroom, I'd tell her, "Help is coming. You just haven't found the right solution yet."</p>
+      <p class="mb-4">Don't waste years feeling bad about yourself like I did. Don't spend thousands on products that don't work. This isn't about vanity. It's about getting back the confidence, the identity, the joy that comes with feeling beautiful again.</p>
+      <p class="mb-4">You deserve to look in the mirror and love what you see. You deserve to wake up without finding clumps of hair on your pillow. You deserve to feel like yourself again.</p>
+      <p class="mb-6">I got my life back with SporaCare. Now it's your turn.</p>
+      <a href="#" class="cta-button inline-block bg-green-600 text-white font-semibold py-3 px-6 rounded-lg text-lg">DISCOVER SPORACARE NOW</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-6">
+      <p>&copy; 2025 SporaCare. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Basic interactivity for CTA button
+    document.querySelector('.cta-button').addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Redirecting to SporaCare purchase page...');
+      // Replace with actual redirect URL when available
+      // window.location.href = 'https://spobacare.com/purchase';
+    });
+  </script>
+</body>
+</html>
